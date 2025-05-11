@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.security.enums.ClientType;
+import com.example.security.enums.ServicesPackage;
 import com.example.security.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,31 +21,60 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private String email;
-
+    private ClientType clientType;
+    private String name;
+    private String lastName;
+    private String companyName;
+    private String pib;
+    private String address;
+    private String city;
+    private String country;
+    private String phoneNumber;
+	private ServicesPackage servicesPackage;
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-        Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String username, String email, String password, ClientType clientType, String name, String lastName, String companyName, String pib, String address, String city,
+    String country, String phoneNumber, ServicesPackage servicesPackage, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.clientType = clientType;
+        this.name = name;
+        this.lastName = lastName;
+        this.companyName = companyName;
+        this.pib = pib;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+		this.servicesPackage = servicesPackage;
         this.authorities = authorities;
     }
 
     public static UserDetailsImpl build(User user) {
-    List<GrantedAuthority> authorities = user.getRoles().stream()
-                               .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                               .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                                .collect(Collectors.toList());
 
-    return new UserDetailsImpl(user.getId(), 
-                               user.getUsername(), 
-                               user.getEmail(),
-                               user.getPassword(), 
-                               authorities);
+        return new UserDetailsImpl(user.getId(), 
+                                user.getUsername(), 
+                                user.getEmail(),
+                                user.getPassword(),
+                                user.getClientType(),
+                                user.getName(),
+                                user.getLastName(),
+                                user.getCompanyName(),
+                                user.getPib(),
+                                user.getAddress(),
+                                user.getCity(),
+                                user.getCountry(),
+                                user.getPhoneNumber(),
+                                user.getServicesPackage(),
+                                authorities);
     }
 
     @Override
@@ -67,6 +98,46 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+	public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getCompanyName() {
+      return companyName;
+    }
+
+    public String getPib() {
+      return pib;
+    }
+
+	public ClientType getClientType() {
+        return clientType;
+    }
+
+    public ServicesPackage getServicesPackage() {
+        return servicesPackage;
     }
 
     @Override

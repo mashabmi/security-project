@@ -34,19 +34,14 @@ public class SignupRequest {
     @StrongPassword
     private String password;
 
-    @NotBlank
     private String confirmPassword;
 
-    @NotBlank
     private String address;
 
-    @NotBlank
     private String city;
 
-    @NotBlank
     private String country;
 
-    @NotBlank
     private String phoneNumber;
 
     private String companyName;
@@ -178,4 +173,5 @@ public class SignupRequest {
     public void setServicesPackage(ServicesPackage servicesPackage) {
         this.servicesPackage = servicesPackage;
     }
+
 }

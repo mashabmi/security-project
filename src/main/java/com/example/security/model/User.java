@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.security.enums.*;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -28,7 +29,7 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private ClientType clientType;
 
@@ -48,6 +49,7 @@ public class User implements UserDetails{
 
     @NotBlank
     @Size(max = 20)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotBlank
@@ -77,14 +79,14 @@ public class User implements UserDetails{
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private ServicesPackage servicesPackage;
 
     public User() {
     }
   
-    public User(String name, String lastName, String username, String email, String password, String address, String city, String country, String phoneNumber, String companyName, String pib, ClientType clientType, ServicesPackage servicesPackage) {
+    public User(String name, String lastName, String username, String email, String password, String address, String city, String country, String phoneNumber, String companyName, String pib, @Nullable ClientType clientType, ServicesPackage servicesPackage) {
       this.name = name;
       this.lastName = lastName;
       this.username = username;
@@ -221,9 +223,32 @@ public class User implements UserDetails{
     }
 
     @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : roles) {
+            authorities.add((GrantedAuthority) () -> role.getName().name());
+        }
+        return authorities;
     }
     
 }

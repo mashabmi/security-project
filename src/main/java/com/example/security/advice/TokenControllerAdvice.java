@@ -12,6 +12,7 @@ import com.example.security.exception.TokenRefreshException;
 
 @RestControllerAdvice
 public class TokenControllerAdvice {
+    
     @ExceptionHandler(value = TokenRefreshException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErrorMessage handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {

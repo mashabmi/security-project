@@ -3,7 +3,6 @@ package com.example.security.controller;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
@@ -13,14 +12,14 @@ public class TestController {
         return "Public Content.";
     }
 
-    @GetMapping("/client")
-    @PreAuthorize("hasRole('ROLE_CLIENT') or hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public String userAccess() {
-        return "User Content.";
+        return "User Board.";
     }
 
-    @GetMapping("/employee")
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @GetMapping("/mod")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public String moderatorAccess() {
         return "Moderator Board.";
     }
