@@ -1,0 +1,93 @@
+/* Container styling */
+h2 {
+    text-align: center;
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.card-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    margin-left: 20px;
+    display: block;
+    font-weight: 500;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+input.form-control, 
+select.form-control {
+    margin-left: 20px;
+    width: 90%;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    display: block;
+}
+
+.radio-group {
+    margin-left: 20px;
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-check-input {
+    position: absolute;
+    margin-top: .3rem;
+    margin-left: -0.10rem;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    margin-left: 20px;
+}
+
+button.btn-block {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 100%;
+    margin: 20px auto 0;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+@media (max-width: 768px) {
+    .card-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+}

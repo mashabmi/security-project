@@ -1,0 +1,136 @@
+<div class="col-md-12">
+  <div class="card card-container">
+    <h2>Registration Form</h2>
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+      <!-- Client Type -->
+      <div class="form-group">
+        <label>Client Type</label>
+        <div class="radio-group">
+          <input type="radio" class="form-check-input" name="clientType" [(ngModel)]="form.clientType" value="INDIVIDUAL" required #clientType="ngModel" [ngClass]="{ 'is-invalid': f.submitted && clientType.errors }"/>
+          <label class="form-check-label">Individual</label>
+        </div>
+        <div class="radio-group">
+          <input type="radio" class="form-check-input" name="clientType" [(ngModel)]="form.clientType" value="LEGAL" required #clientType="ngModel" [ngClass]="{ 'is-invalid': f.submitted && clientType.errors }"/>
+          <label class="form-check-label">Legal</label>
+        </div>
+        <div *ngIf="clientType.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('clientType') }}</div>
+      </div>
+
+      <!-- Name -->
+      <div *ngIf="form.clientType === 'INDIVIDUAL'" class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.errors }"/>
+        <div *ngIf="name.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('name') }}</div>
+      </div>
+
+      <!-- Last Name -->
+      <div *ngIf="form.clientType === 'INDIVIDUAL'" class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" name="lastName" [(ngModel)]="form.lastName" required #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }"/>
+        <div *ngIf="lastName.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('lastName') }}</div>
+      </div>
+
+      <!-- Company name -->
+      <div *ngIf="form.clientType === 'LEGAL'" class="form-group">
+        <label for="companyName">Company name</label>
+        <input type="text" class="form-control" name="companyName" [(ngModel)]="form.companyName" required #companyName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && companyName.errors }"/>
+        <div *ngIf="companyName.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('companyName') }}</div>
+      </div>
+
+      <!-- PIB -->
+      <div *ngIf="form.clientType === 'LEGAL'" class="form-group">
+        <label for="pib">PIB</label>
+        <input type="text" class="form-control" name="pib" [(ngModel)]="form.pib" required #pib="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pib.errors }"/>
+        <div *ngIf="pib.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('pib') }}</div>
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required minlength="3" maxlength="20" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.errors }"/>
+        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('username') }}</div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }"/>
+        <div *ngIf="email.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('email') }}</div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"/>
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('password') }}</div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="form.confirmPassword" required #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors || passwordsMismatch }"/>
+        <div *ngIf="confirmPassword.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('confirmPassword') }}</div>
+        <div *ngIf="passwordsMismatch && f.submitted" class="invalid-feedback">Passwords do not match</div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" name="address" [(ngModel)]="form.address" required #address="ngModel" [ngClass]="{ 'is-invalid': f.submitted && address.errors }"/>
+        <div *ngIf="address.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('address') }}</div>
+      </div>
+
+      <!-- City -->
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" name="city" [(ngModel)]="form.city" required #city="ngModel" [ngClass]="{ 'is-invalid': f.submitted && city.errors }"/>
+        <div *ngIf="city.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('city') }}</div>
+      </div>
+
+      <!-- Country -->
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" class="form-control" name="country" [(ngModel)]="form.country" required #country="ngModel" [ngClass]="{ 'is-invalid': f.submitted && country.errors }"/>
+        <div *ngIf="country.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('country') }}</div>
+      </div>
+
+      <!-- Phone number -->
+      <div class="form-group">
+        <label for="phoneNumber">Phone number</label>
+        <input type="text" class="form-control" name="phoneNumber" [(ngModel)]="form.phoneNumber" required #phoneNumber="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.errors }"/>
+        <div *ngIf="phoneNumber.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('phoneNumber') }}</div>
+      </div>
+
+      <!-- Services Package -->
+      <div class="form-group">
+        <label>Package Services</label>
+        <div class="radio-group">
+          <input type="radio" class="form-check-input" name="servicesPackage" [(ngModel)]="form.servicesPackage" value="BASIC" required #servicesPackage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && servicesPackage.errors }"/>
+          <label class="form-check-label">Basic</label>
+        </div>
+        <div class="radio-group">
+          <input type="radio" class="form-check-input" name="servicesPackage" [(ngModel)]="form.servicesPackage" value="STANDARD" required #servicesPackage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && servicesPackage.errors }"/>
+          <label class="form-check-label">Standard</label>
+        </div>
+        <div class="radio-group">
+          <input type="radio" class="form-check-input" name="servicesPackage" [(ngModel)]="form.servicesPackage" value="GOLDEN" required #servicesPackage="ngModel" [ngClass]="{ 'is-invalid': f.submitted && servicesPackage.errors }"/>
+          <label class="form-check-label">Golden</label>
+        </div>
+        <div *ngIf="clientType.errors && f.submitted" class="invalid-feedback">{{ getErrorMessage('clientType') }}</div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group" style="margin-top: 20px;">
+        <button class="btn btn-primary btn-block">Register</button>
+      </div>
+
+      <!-- Success/Failure Message -->
+      <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
+        Registration failed!<br />{{ errorMessage }}
+      </div>
+      <div *ngIf="isSuccessful" class="alert alert-success">Your registration is successful!</div>
+
+    </form>
+  </div>
+</div>

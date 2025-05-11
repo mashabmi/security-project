@@ -1,0 +1,90 @@
+<div class="col-md-12">
+  <div class="card card-container">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <h2>Log in</h2>
+    <div *ngIf="!isLoggedIn">
+      <form
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
+        <div class="form-group">
+          <i class='bx bx-user'></i>
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="form.username"
+            required
+            #username="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+          />
+          <div *ngIf="username.errors && f.submitted" class="invalid-feedback1">
+            Username is required!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <i class='bx bx-lock-alt'></i>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="form.password"
+            required
+            #password="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          />
+          <div *ngIf="password.errors && f.submitted" class="invalid-feedback1">
+            <div *ngIf="password.errors['required']">Password is required!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Login As</label>
+          <select
+            name="role"
+            class="form-control"
+            [(ngModel)]="form.role"
+            #role="ngModel"
+            required
+            (change)="onRoleChange()"
+            [ngClass]="{ 'is-invalid': f.submitted && role.errors }">
+            <option value="" disabled selected>Select your role</option>
+            <option [value]="UserRole.USER">User</option>
+            <option [value]="UserRole.ADMIN">Administrator</option>
+            <option [value]="UserRole.MODERATOR">Moderator</option>
+          </select>
+          <div *ngIf="role.errors && f.submitted" class="invalid-feedback">
+            <div *ngIf="role.errors['required']">Role is required!</div>
+          </div>
+        </div>
+
+        <!-- reCAPTCHA -->
+        <div *ngIf="form.role === UserRole.MODERATOR" class="form-group">
+          <div class="g-recaptcha" data-sitekey="6LdqIfcqAAAAABo4RSS7b6YLCznOCYL7YVfblnOQ" data-callback="onCaptchaResolved" style="margin-top: 10px; margin-right: 20px"></div>
+          <div *ngIf="form.role ===  UserRole.MODERATOR && f.submitted && !form.captcha" class="invalid-feedback d-block">
+            reCAPTCHA verification is required for moderators!
+          </div>
+        </div>
+
+        <div *ngIf="isLoginFailed" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" style="margin-top: 8px;">Login</button>
+        </div>
+
+        <div class="form-group">
+          <p class="custom-text">Not registered yet? <a href="/register" class="custom-text">Register</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+

@@ -1,0 +1,42 @@
+@if (form) {
+  <div class="container">
+    <header class="jumbotron">
+      <h2><strong>{{ form.username }}</strong> Profile</h2>
+    </header>
+
+    @if (form.roles.includes('ROLE_USER')) {
+      <p><strong>User type: </strong>{{ form.clientType }}</p>
+      <p><strong>Email: </strong>{{ form.email }}</p>
+
+      @if (form.clientType === 'INDIVIDUAL') {
+        <p><strong>Name: </strong> {{ form.name }}</p>
+        <p><strong>Last name: </strong> {{ form.lastName }}</p>
+      }
+
+      @if (form.clientType === 'LEGAL') {
+        <p><strong>Company name: </strong> {{ form.companyName }}</p>
+        <p><strong>PIB: </strong> {{ form.pib }}</p>
+      }
+
+      <p><strong>Address: </strong>{{ form.address }}</p>
+      <p><strong>City: </strong>{{ form.city }}</p>
+      <p><strong>Country: </strong>{{ form.country }}</p>
+      <p><strong>Phone number: </strong>{{ form.phoneNumber }}</p>
+      <p><strong>Package service: </strong>{{ form.servicesPackage }}</p>
+    }
+
+    @if (form.roles.includes('ROLE_ADMIN') || form.roles.includes('ROLE_MODERATOR')) {
+      <p><strong>Email: </strong>{{ form.email }}</p>
+    }
+
+    <strong>Roles:</strong>
+    <ul>
+      @for (role of form.roles; track role) {
+        <li>{{ role }}</li>
+      }
+    </ul>
+
+  </div>
+} @else {
+  <p>Please login to view your profile.</p>
+}
